@@ -2,6 +2,10 @@ import instaloader
 from datetime import datetime
 
 # CONFIG -- INICIO
+
+now = datetime.now()
+dataHjHora = str(datetime.now().day)+"_"+str(datetime.now().month)+"_"+str(datetime.now().year)+"-"+str(datetime.now().hour)+"_"+str(datetime.now().minute)
+meuLoader = instaloader.Instaloader()
 #SEUS DADOS CUSTOMIZADOS -- INICIO
 prefixo_arquivo = ''
 meuUsuarioInstagram = ""
@@ -9,18 +13,16 @@ minhaSenha = ""
 caminhoSalvarArquivos = ""
 perfilAlvo = ""
 #SEUS DADOS CUSTOMIZADOS -- FIM
-now = datetime.now()
-dataHjHora = str(datetime.now().day)+"_"+str(datetime.now().month)+"_"+str(datetime.now().year)+"-"+str(datetime.now().hour)+"_"+str(datetime.now().minute)
-meuLoader = instaloader.Instaloader()
 meuLoader.login(meuUsuarioInstagram, minhaSenha)
 # CONFIG -- FIM
 
 perfilAlvo_obtido = instaloader.Profile.from_username(meuLoader.context, perfilAlvo)
 
-def seguidos_por(perfil):
+
+def seguidos_por(perfil, perfilAlvo):
     contador = 0
     lista_de_seguidos = []
-    pacote = perfilAlvo_obtido.get_followees()
+    pacote = perfil.get_followees()
     qtdSeguindo = pacote.count
     print(" SEGUINDO: "+ str(qtdSeguindo), " PERFIS [PROCESSANDO]\n")
     arquivo_texto = open(caminhoSalvarArquivos + prefixo_arquivo + "_seguidos-"+dataHjHora+".txt", "a+")
@@ -35,10 +37,11 @@ def seguidos_por(perfil):
         contador = contador + 1
     print("-- [CONFIRMADO] | "+ str(contador) +" SEGUIDOS | FIM --\n")
 
-def seguindo_perfil(perfil):
+
+def seguindo_perfil(perfil, perfilAlvo):
     contador = 0
     lista_de_seguindo = []
-    pacote = perfilAlvo_obtido.get_followers()
+    pacote = perfil.get_followers()
     qtdSeguidores = pacote.count
     print(" SEGUIDORES: "+ str(qtdSeguidores), " PERFIS [PROCESSANDO]\n")
     arquivo_texto = open(caminhoSalvarArquivos + prefixo_arquivo + "_seguidores-"+dataHjHora+".txt", "a+")
@@ -53,12 +56,13 @@ def seguindo_perfil(perfil):
         contador = contador + 1
     print("-- [CONFIRMADO] | " + str(contador) + " SEGUIDORES | FIM --\n")
 
-def posts_perfil(perfil):
-    pacote = perfilAlvo_obtido.get_posts()
+
+def posts_perfil(perfil, perfilAlvo):
+    pacote = perfil.get_posts()
     qtdPosts = pacote.count
     contador = qtdPosts
     arquivo_texto = open(caminhoSalvarArquivos + prefixo_arquivo + "_posts-" + dataHjHora + ".txt", "a+")
-    arquivo_texto.write("> QUANTIDADE POSTS: " + str(qtdPosts) + " | DATA_COLETA: " + str(now) +" \n")
+    arquivo_texto.write("-- [" + perfilAlvo + "] QUANTIDADE POSTS: " + str(qtdPosts) + " | DATA_COLETA: " + str(now) +" \n")
     arquivo_texto.close()
     for post in pacote:
         countLikes = 0
@@ -78,7 +82,9 @@ def posts_perfil(perfil):
         print("-- [CONFIRMADO] | POST Nº" + str(contador) + " | FIM --\n")
         contador = contador - 1
 
+
 # RODANDO ROTINA DE VERIFICAÇÃO
-seguidos_por(perfilAlvo_obtido)
-seguindo_perfil(perfilAlvo_obtido)
-posts_perfil(perfilAlvo_obtido)
+seguidos_por(perfilAlvo_obtido, perfilAlvo)
+seguindo_perfil(perfilAlvo_obtido, perfilAlvo)
+posts_perfil(perfilAlvo_obtido, perfilAlvo)
+
