@@ -1,6 +1,6 @@
-# DXS | PYTHON : captura de seguidores de um perfil alvo do Instagram
+# DXS | PYTHON : captura de seguidores, seguidos e posts de um perfil alvo do Instagram
 <img src="https://dataxstudios.com.br/assets/images/logo_DXS_400_190.png" alt="dxs" width="100"/> 
-
+Cancel changes
 ### Aplicação e estudo dos conceitos de data scraping no Instagram<br>
 O main chama o script que irá capturar os usernames dos seguidores e seguidos de um perfil alvo,<br>
 além de fazer a leitura de quantos likes têm todos os posts deste mesmo perfil.<br>
