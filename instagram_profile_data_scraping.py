@@ -2,14 +2,16 @@ import instaloader
 from datetime import datetime
 
 # CONFIG -- INICIO
+#SEUS DADOS CUSTOMIZADOS -- INICIO
+prefixo_arquivo = ''
+meuUsuarioInstagram = ""
+minhaSenha = ""
+caminhoSalvarArquivos = ""
+perfilAlvo = ""
+#SEUS DADOS CUSTOMIZADOS -- FIM
 now = datetime.now()
 dataHjHora = str(datetime.now().day)+"_"+str(datetime.now().month)+"_"+str(datetime.now().year)+"-"+str(datetime.now().hour)+"_"+str(datetime.now().minute)
 meuLoader = instaloader.Instaloader()
-prefixo_arquivo = ""
-meuUsuarioInstagram = ""
-minhaSenha = ""
-caminhoSalvarArquivos = "C:/Users/"
-perfilAlvo = ""
 meuLoader.login(meuUsuarioInstagram, minhaSenha)
 # CONFIG -- FIM
 
@@ -51,7 +53,7 @@ def seguindo_perfil(perfil):
         contador = contador + 1
     print("-- [CONFIRMADO] | " + str(contador) + " SEGUIDORES | FIM --\n")
 
-def seguindo_perfil(perfil):
+def posts_perfil(perfil):
     pacote = perfilAlvo_obtido.get_posts()
     qtdPosts = pacote.count
     contador = qtdPosts
@@ -79,5 +81,4 @@ def seguindo_perfil(perfil):
 # RODANDO ROTINA DE VERIFICAÇÃO
 seguidos_por(perfilAlvo_obtido)
 seguindo_perfil(perfilAlvo_obtido)
-seguindo_perfil(perfilAlvo_obtido)
-
+posts_perfil(perfilAlvo_obtido)
