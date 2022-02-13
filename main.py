@@ -1,2 +1,4 @@
-#import instagram_profile_data_scraping
-#import ipds_checker
+import instagram_profile_data_scraping
+
+ipds = instagram_profile_data_scraping.Instagram_profile_data_scraping()
+ipds.rodarRotinaVerificacao()
