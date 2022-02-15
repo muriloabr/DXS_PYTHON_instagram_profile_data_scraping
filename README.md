@@ -15,10 +15,10 @@ conforme os dados capturados.
 - Captura os dados, faz o acompanhamento de quem deixou de seguir e de novos seguidores;
 - ✨Aplicação com dependência do pacote Instaloader.
 
-# :: INSTALAÇÃO DE DEPÊNDENCIAS ::
-pip3 install instaloader
-**ATUALIZADO**
-pip3 install --upgrade instaloader
+### :: INSTALAÇÃO DE DEPÊNDENCIAS ::<br>
+pip3 install instaloader<br>
+**ATUALIZADO**<br>
+pip3 install --upgrade instaloader<br>
 
 ### Telas de resultados:<br>![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_1.PNG)![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_2.PNG)
 ![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_3.PNG)
