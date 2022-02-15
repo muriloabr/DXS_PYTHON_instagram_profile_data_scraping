@@ -1,23 +1,27 @@
 import instaloader
 from datetime import datetime
 import ipds_checker
+from config_class import Config_class
 
 class Instagram_profile_data_scraping:
-    def __init__(self):
-        # CONFIG -- INICIO
-        self.now = datetime.now()
-        self.dataHjHora = str(datetime.now().day)+"_"+str(datetime.now().month)+"_"+str(datetime.now().year)+"-"+str(datetime.now().hour)+"_"+str(datetime.now().minute)
-        self.meuLoader = instaloader.Instaloader()
-        #SEUS DADOS CUSTOMIZADOS -- INICIO
-        self.prefixo_arquivo = ''
-        self.meuUsuarioInstagram = ""
-        self.minhaSenha = ""
-        self.caminhoSalvarArquivos = ""
-        self.perfilAlvo = ""
-        #SEUS DADOS CUSTOMIZADOS -- FIM
-        self.meuLoader.login(self.meuUsuarioInstagram, self.minhaSenha)
-        # CONFIG -- FIM
-        self.perfilAlvo_obtido = instaloader.Profile.from_username(self.meuLoader.context, self.perfilAlvo)
+    def __init__(self, configuracao):
+        if (isinstance(configuracao, Config_class)):
+            # CONFIG -- INICIO
+            self.now = datetime.now()
+            self.dataHjHora = str(datetime.now().day)+"_"+str(datetime.now().month)+"_"+str(datetime.now().year)+"-"+str(datetime.now().hour)+"_"+str(datetime.now().minute)
+            self.meuLoader = instaloader.Instaloader()
+            #SEUS DADOS CUSTOMIZADOS -- INICIO
+            self.prefixo_arquivo = configuracao.prefixo_arquivo
+            self.meuUsuarioInstagram = configuracao.meuUsuarioInstagram
+            self.minhaSenha = configuracao.minhaSenha
+            self.caminhoSalvarArquivos = configuracao.caminhoSalvarArquivos
+            self.perfilAlvo = configuracao.perfilAlvo
+            #SEUS DADOS CUSTOMIZADOS -- FIM
+            self.meuLoader.login(self.meuUsuarioInstagram, self.minhaSenha)
+            # CONFIG -- FIM
+            self.perfilAlvo_obtido = instaloader.Profile.from_username(self.meuLoader.context, self.perfilAlvo)
+        else:
+            exit("O parametro deve ser uma instância de: Config_class")
 
     def seguidos_por(self, perfil, perfilAlvo):
         contador = 0
