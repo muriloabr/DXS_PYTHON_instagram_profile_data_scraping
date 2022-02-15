@@ -1,7 +1,7 @@
 import instaloader
 from datetime import datetime
-import ipds_checker
 from config_class import Config_class
+from ipds_checker import Ipds_checker
 
 class Instagram_profile_data_scraping:
     def __init__(self, configuracao):
@@ -22,6 +22,12 @@ class Instagram_profile_data_scraping:
             self.perfilAlvo_obtido = instaloader.Profile.from_username(self.meuLoader.context, self.perfilAlvo)
         else:
             exit("O parametro deve ser uma instância de: Config_class")
+
+
+    def iniciarConexao(self):
+        self.meuLoader.login(self.meuUsuarioInstagram, self.minhaSenha)
+        # CONFIG -- FIM
+        self.perfilAlvo_obtido = instaloader.Profile.from_username(self.meuLoader.context, self.perfilAlvo)
 
     def seguidos_por(self, perfil, perfilAlvo):
         contador = 0
@@ -87,11 +93,12 @@ class Instagram_profile_data_scraping:
             contador = contador - 1
 
     def rodarRotinaVerificacao(self):
+        #self.iniciarConexao
         # RODANDO ROTINA DE VERIFICAÇÃO
         # self.seguidos_por(self.perfilAlvo_obtido, self.perfilAlvo)
         # self.seguindo_perfil(self.perfilAlvo_obtido, self.perfilAlvo)
         # self.posts_perfil(self.perfilAlvo_obtido, self.perfilAlvo)
-        ipds = ipds_checker.Ipds_checker(self.caminhoSalvarArquivos, self.prefixo_arquivo)
+        ipds = Ipds_checker.Ipds_checker(self.caminhoSalvarArquivos, self.prefixo_arquivo)
         ipds.rodarRotinaVerificacao()
 
 

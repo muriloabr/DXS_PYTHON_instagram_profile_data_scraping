@@ -4,7 +4,6 @@ import time
 import re
 from datetime import datetime
 
-
 class Ipds_checker:
     def __init__(self, caminho, prefixo_arquivo):
         self.caminho = caminho
@@ -20,27 +19,8 @@ class Ipds_checker:
     def checar_arquivo(self, elementos_para_capturar, arquivo):
         msg1 = ""
         if (elementos_para_capturar[0] == 'posts'):  # CASO FOR CHECAR NO ARQUIVO POR DADOS DE POSTS
-            # PULO A PRIMEIRA LINHA DO CABEÇALHO
-            linha_atual = arquivo.readline()
-            alternancia = 0
-            # ENQUANTO HOUVER LINHA PARA SER LIDA NO ARQUIVO
-            while linha_atual:
-                # LEIO A LINHA ATUAL
-                linha_atual = arquivo.readline()
-                # LER A LINHA SE HOUVER IDENTIFICADOR DE CABECALHO
-                if '--' in linha_atual:
-                    # SE ALTERNANCIA = 0 LER A Nº DA ORDEM DO POST NO FEED
-                    if (alternancia == 0):
-                        msg1 += " ORDEM: " + str(re.findall(r'\d+', linha_atual)[0])
-                        alternancia = alternancia + 1
-                    # SE ALTERNANCIA = 1 LER A Nº DE LIKES DO POST
-                    elif (alternancia == 1):
-                        msg1 += " LIKES: " + str(re.findall(r'\d+', linha_atual)[0])
-                        alternancia = 0
-                        msg1 += "\n"
-                    # CASO HOUVER ALGO ERRADO PULA
-                    else:
-                        msg1 += "\n"
+            # DOU FEEDBACK DE FIM DE ROTINA
+            print("-- checar_arquivos() para POSTS [NÃO IMPLEMENTADA AINDA] --")
         elif elementos_para_capturar[0] == ('seguidos'):  # CASO FOR CHECAR NO ARQUIVO POR DADOS DE SEGUIDOS
             # PULO A PRIMEIRA LINHA DO CABEÇALHO
             linha_atual = arquivo.readline()
@@ -129,7 +109,49 @@ class Ipds_checker:
         # DOU FEEDBACK DE INICIO DE ROTINA
         print("> LOCALIZANDO DADOS DISCREPANTES DE "+elementos_para_capturar[0].upper())
         if (elementos_para_capturar[0] == 'posts'):  # CASO FOR CHECAR NO ARQUIVO POR DADOS DE POSTS
-            print("leu")
+
+            # PULO A PRIMEIRA LINHA DO CABEÇALHO DO ARQUIVO NOVO
+            linha_atual = novo.readline()
+
+            # ENQUANTO HOUVER LINHA PARA SER LIDA NO ARQUIVO NOVO
+            while linha_atual:
+                # LEIO A LINHA ATUAL
+                linha_atual = novo.readline()
+                alternancia = 0
+                msg1 = '';
+                listaPost = []
+                if (alternancia == 0):
+                    msg1 += " ORDEM: " + str(re.findall(r'\d+', linha_atual)[0])
+                    alternancia = alternancia + 1
+                # SE ALTERNANCIA = 1 LER A Nº DE LIKES DO POST
+                elif (alternancia == 1):
+                    msg1 += " LIKES: " + str(re.findall(r'\d+', linha_atual)[0])
+                    alternancia = 0
+                    msg1 += "\n"
+                # ENCONTRAR O POST QUE PRECISA SER CHECADO
+
+                #IDEIA LISTA NOVA COM ORDEM + LIKES | PRECISO DO LINK PARA COMPARAR SENAO A ORDEM MUDA E FALHA TUDO | COMPARAR OS DOIS LIST E REMOVER OS QUE SAO IGUAIS E SEEK() RESET NOS DOIS E IR DE NOVO CATANDO SÓ OS USERS DOS POSTS QUE SOBRARAM NA LISTA
+
+                # LER A LINHA SE NÃO HOUVER IDENTIFICADORES DE CABECALHO OU VAZIA
+                if (('--' not in linha_atual) and (linha_atual.strip() != '')):
+                    # ADICIONO NA LISTA
+                    listaDadosDiscrepantes.append(linha_atual)
+            # PULO A PRIMEIRA LINHA DO CABEÇALHO DO ARQUIVO ANTIGO
+            linha_atual = velho.readline()
+            # RESETO A LEITURA
+            novo.seek(0, 0)
+            # ENQUANTO HOUVER LINHA PARA SER LIDA NO ARQUIVO
+            while linha_atual:
+                # LEIO A LINHA ATUAL
+                linha_atual = velho.readline()
+                # LER A LINHA SE NÃO HOUVER IDENTIFICADORES DE CABECALHO OU VAZIA
+                if (('--' not in linha_atual) and (linha_atual != '')):
+                    # SE NÃO CONTAR NA LISTA COMPLETA
+                    if (linha_atual not in listaDadosDiscrepantes):
+                        # ADICIONO NA LISTA
+                        listaDadosDiscrepantes.append('SUMIU : ' + linha_atual)
+                    else:
+                        listaDadosDiscrepantes.remove(linha_atual)
         elif elementos_para_capturar[0] == ('seguidos'):  # CASO FOR CHECAR NO ARQUIVO POR DADOS DE SEGUIDOS
             # PULO A PRIMEIRA LINHA DO CABEÇALHO DO ARQUIVO NOVO
             linha_atual = novo.readline()
@@ -138,31 +160,25 @@ class Ipds_checker:
                 # LEIO A LINHA ATUAL
                 linha_atual = novo.readline()
                 # LER A LINHA SE NÃO HOUVER IDENTIFICADORES DE CABECALHO OU VAZIA
-                if (('--' not in linha_atual) & (linha_atual.strip() != '')):
+                if (('--' not in linha_atual) and (linha_atual.strip() != '')):
                     # ADICIONO NA LISTA
-                    listaDadosDiscrepantes.append(linha_atual.strip())
+                    listaDadosDiscrepantes.append(linha_atual)
             # PULO A PRIMEIRA LINHA DO CABEÇALHO DO ARQUIVO ANTIGO
             linha_atual = velho.readline()
+            # RESETO A LEITURA
+            novo.seek(0, 0)
             # ENQUANTO HOUVER LINHA PARA SER LIDA NO ARQUIVO
             while linha_atual:
                 # LEIO A LINHA ATUAL
-                linha_atual = novo.readline()
+                linha_atual = velho.readline()
                 # LER A LINHA SE NÃO HOUVER IDENTIFICADORES DE CABECALHO OU VAZIA
-                if (('--' not in linha_atual) & (linha_atual.strip() != '')):
+                if (('--' not in linha_atual) and (linha_atual != '')):
                     # SE NÃO CONTAR NA LISTA COMPLETA
-                    if(linha_atual.strip() not in listaDadosDiscrepantes):
+                    if (linha_atual not in listaDadosDiscrepantes):
                         # ADICIONO NA LISTA
-                        listaDadosDiscrepantes.append(linha_atual.strip())
+                        listaDadosDiscrepantes.append('SUMIU : '+linha_atual)
                     else:
-                        # REMOVO DA LISTA OS DADOS REPETIDOS
-                        listaDadosDiscrepantes.remove(linha_atual.strip())
-            dataHjHora = str(datetime.now().day) + "_" + str(datetime.now().month) + "_" + str(
-                datetime.now().year) + "-" + str(datetime.now().hour) + "_" + str(datetime.now().minute)
-            # CRIA ARQUIVO DE DISCREPANCIA
-            arquivo = open(self.caminho + self.prefixo_arquivo + elementos_para_capturar[3] + dataHjHora + ".txt", "w+")
-            for item in listaDadosDiscrepantes:
-                arquivo.write(item+"/n")
-            arquivo.close()
+                        listaDadosDiscrepantes.remove(linha_atual)
         elif elementos_para_capturar[0] == ('seguidores'):  # CASO FOR CHECAR NO ARQUIVO POR DADOS DE SEGUIDORES
             # PULO A PRIMEIRA LINHA DO CABEÇALHO DO ARQUIVO NOVO
             linha_atual = novo.readline()
@@ -171,34 +187,34 @@ class Ipds_checker:
                 # LEIO A LINHA ATUAL
                 linha_atual = novo.readline()
                 # LER A LINHA SE NÃO HOUVER IDENTIFICADORES DE CABECALHO OU VAZIA
-                if (('--' not in linha_atual) & (linha_atual.strip() != '')):
+                if (('--' not in linha_atual) and (linha_atual.strip() != '')):
                     # ADICIONO NA LISTA
-                    listaDadosDiscrepantes.append(linha_atual.strip())
+                    listaDadosDiscrepantes.append(linha_atual)
             # PULO A PRIMEIRA LINHA DO CABEÇALHO DO ARQUIVO ANTIGO
             linha_atual = velho.readline()
+            # RESETO A LEITURA
+            novo.seek(0, 0)
             # ENQUANTO HOUVER LINHA PARA SER LIDA NO ARQUIVO
             while linha_atual:
                 # LEIO A LINHA ATUAL
-                linha_atual = novo.readline()
+                linha_atual = velho.readline()
                 # LER A LINHA SE NÃO HOUVER IDENTIFICADORES DE CABECALHO OU VAZIA
-                if (('--' not in linha_atual) & (linha_atual.strip() != '')):
+                if (('--' not in linha_atual) and (linha_atual != '')):
                     # SE NÃO CONTAR NA LISTA COMPLETA
-                    if (linha_atual.strip() not in listaDadosDiscrepantes):
+                    if (linha_atual not in listaDadosDiscrepantes):
                         # ADICIONO NA LISTA
-                        listaDadosDiscrepantes.append(linha_atual.strip())
+                        listaDadosDiscrepantes.append('SUMIU : ' + linha_atual)
                     else:
-                        # REMOVO DA LISTA OS DADOS REPETIDOS
-                        listaDadosDiscrepantes.remove(linha_atual.strip())
-            dataHjHora = str(datetime.now().day) + "_" + str(datetime.now().month) + "_" + str(
-                datetime.now().year) + "-" + str(datetime.now().hour) + "_" + str(datetime.now().minute)
-            # CRIA ARQUIVO DE DISCREPANCIA
-            arquivo = open(self.caminho + self.prefixo_arquivo + elementos_para_capturar[3] + dataHjHora + ".txt", "w+")
-            for item in listaDadosDiscrepantes:
-                arquivo.write(item+"/n")
-            arquivo.close()
+                        listaDadosDiscrepantes.remove(linha_atual)
         else:
             # CASO A OPCAO NAO ESTEJA NA LISTA PUBLICA DE OPCOES
             print('NÃO ENCONTROU UMA OPÇÃO PARA CHECAR ARQUIVOS VÁLIDA!')
+        dataHjHora = str(datetime.now().day) + "_" + str(datetime.now().month) + "_" + str(
+            datetime.now().year) + "-" + str(datetime.now().hour) + "_" + str(datetime.now().minute)
+        # CRIA ARQUIVO DE DISCREPANCIA
+        arquivo = open(self.caminho + self.prefixo_arquivo + elementos_para_capturar[3] + dataHjHora + ".txt", "w+")
+        for item in listaDadosDiscrepantes:
+            arquivo.writelines(item)
         # COMO ABRI PARA LER ESTOU FECHANDO
         arquivo.close()
         # DOU FEEDBACK DE FIM DE ROTINA
@@ -207,5 +223,5 @@ class Ipds_checker:
     def rodarRotinaVerificacao(self):
         # RODANDO ROTINA DE VERIFICAÇÃO
         #self.comprarar_doisUltimos_arquivos(self.listaPublicaElementosParaCapturar['posts'])
-        #self.comprarar_doisUltimos_arquivos(self.listaPublicaElementosParaCapturar['seguidos'])
+        self.comprarar_doisUltimos_arquivos(self.listaPublicaElementosParaCapturar['seguidos'])
         self.comprarar_doisUltimos_arquivos(self.listaPublicaElementosParaCapturar['seguidores'])
