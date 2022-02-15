@@ -17,7 +17,6 @@ conforme os dados capturados.
 
 ### :: INSTALAÇÃO DE DEPÊNDENCIAS ::<br>
 pip3 install instaloader<br>
-**ATUALIZADO**<br>
 pip3 install --upgrade instaloader<br>
 
 ### Telas de resultados:<br>![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_1.PNG)![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_2.PNG)
