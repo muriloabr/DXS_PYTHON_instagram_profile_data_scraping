@@ -17,9 +17,8 @@ class Instagram_profile_data_scraping:
             self.caminhoSalvarArquivos = configuracao.caminhoSalvarArquivos
             self.perfilAlvo = configuracao.perfilAlvo
             #SEUS DADOS CUSTOMIZADOS -- FIM
-            self.meuLoader.login(self.meuUsuarioInstagram, self.minhaSenha)
+            self.iniciarConexao()
             # CONFIG -- FIM
-            self.perfilAlvo_obtido = instaloader.Profile.from_username(self.meuLoader.context, self.perfilAlvo)
         else:
             exit("O parametro deve ser uma instância de: Config_class")
 
@@ -93,12 +92,12 @@ class Instagram_profile_data_scraping:
             contador = contador - 1
 
     def rodarRotinaVerificacao(self):
-        #self.iniciarConexao
+        self.iniciarConexao
         # RODANDO ROTINA DE VERIFICAÇÃO
-        # self.seguidos_por(self.perfilAlvo_obtido, self.perfilAlvo)
-        # self.seguindo_perfil(self.perfilAlvo_obtido, self.perfilAlvo)
-        # self.posts_perfil(self.perfilAlvo_obtido, self.perfilAlvo)
-        ipds = Ipds_checker.Ipds_checker(self.caminhoSalvarArquivos, self.prefixo_arquivo)
+        self.seguidos_por(self.perfilAlvo_obtido, self.perfilAlvo)
+        self.seguindo_perfil(self.perfilAlvo_obtido, self.perfilAlvo)
+        self.posts_perfil(self.perfilAlvo_obtido, self.perfilAlvo)
+        ipds = Ipds_checker(self.caminhoSalvarArquivos, self.prefixo_arquivo)
         ipds.rodarRotinaVerificacao()
 
 
