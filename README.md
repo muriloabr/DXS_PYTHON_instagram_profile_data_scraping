@@ -6,16 +6,16 @@ Configure seu config_class.py e coloque-o na mesma pasta, ao rodar o main.py, el
 
 ### Este script pode ser o start para uma engine maior que toma decisões ou gerencia seus perfis de instagram conforme os dados capturados.
 
-   Captura os dados, faz o acompanhamento de quem deixou de seguir e de novos seguidores;  
+   Captura os dados, faz o acompanhamento de quem deixou de seguir e de novos seguidores.  
    ✨Aplicação com dependência do pacote Instaloader.
 
-### INSTALAÇÃO DE DEPÊNDENCIAS 
-``pip3 install instaloader<br>
-pip3 install --upgrade instaloader``
+### INSTALAÇÃO DE DEPÊNDENCIAS   
+``pip3 install instaloader  
+pip3 install --upgrade instaloader``  
 
 ### Telas de resultados:<br>![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_1.PNG)![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_2.PNG)
 ![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_3.PNG)
-![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_4.PNG)
+![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_4.PNG)  
 
 Fiquem por dentro deste repositório com atualizações sempre que possível!  
 [PYTHON] #python
