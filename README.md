@@ -4,7 +4,7 @@
 ### Aplicação de conceitos de data scraping no Instagram<br>
 Configure seu config_class.py e coloque-o na mesma pasta, ao rodar o main.py, ele se encarregará pela chamada dos script que vão em busca dos usernames dos seguidores e seguidos de um perfil alvo, além de fazer a leitura de quantos likes têm todos os posts deste mesmo perfil. Logo em seguida os arquivos de registro são gerados para futuras comparações. Logo em seguida da captura dos dados é feita a comparação da última verificação com esta, que identifica as discrepância entre o registro anterior com o novo registro que acabou de ser criado, criandoa assim um registro de discrepância para seu acompanhamento.  
 
-### Este script pode ser o start para uma engine maior que toma decisões ou gerencia seus perfis de instagram conforme os dados capturados.
+_Este script pode ser o start para uma engine maior que toma decisões ou gerencia seus perfis de instagram conforme os dados capturados._
 
    Captura os dados, faz o acompanhamento de quem deixou de seguir e de novos seguidores.  
    ✨Aplicação com dependência do pacote Instaloader.
