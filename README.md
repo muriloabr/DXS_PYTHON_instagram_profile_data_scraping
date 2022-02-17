@@ -6,7 +6,7 @@ Configure seu config_class.py e coloque-o na mesma pasta, ao rodar o main.py, el
 
 ### Este script pode ser o start para uma engine maior que toma decisões ou gerencia seus perfis de instagram conforme os dados capturados.
 
-   Captura os dados, faz o acompanhamento de quem deixou de seguir e de novos seguidores;
+   Captura os dados, faz o acompanhamento de quem deixou de seguir e de novos seguidores;  
    ✨Aplicação com dependência do pacote Instaloader.
 
 ### INSTALAÇÃO DE DEPÊNDENCIAS 
