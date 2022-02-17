@@ -10,7 +10,7 @@ _Este script pode ser o start para uma engine maior que toma decisões ou gerenc
    ✨Aplicação com dependência do pacote Instaloader.
 
 ### INSTALAÇÃO DE DEPÊNDENCIAS   
-``pip3 install instaloader`` 
+``pip3 install instaloader``  
 ``pip3 install --upgrade instaloader``  
 
 ### Telas de resultados:<br>![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_1.PNG)![imagem da aplicação](https://dataxstudios.com.br/assets/images/github/python_instagram_data_scraping_2.PNG)
